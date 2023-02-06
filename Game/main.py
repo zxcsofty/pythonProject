@@ -9,3 +9,4 @@ pygame.display.set_caption("Моя первая игра")  # заголовок
 
 start_level()
 # test
+# test
