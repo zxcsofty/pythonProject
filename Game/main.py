@@ -8,3 +8,4 @@ pygame.display.set_caption("Моя первая игра")  # заголовок
 # pygame.display.set_icon(icon)
 
 start_level()
+# test
