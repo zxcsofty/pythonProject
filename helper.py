@@ -1,4 +1,4 @@
-from Game.parametrs import *
+from parametrs import *
 
 font_game = pygame.font.match_font('Arial', True, True)
 def draw_text(surf, text, size, x, y):

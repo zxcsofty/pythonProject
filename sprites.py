@@ -1,5 +1,5 @@
 import random
-from Game.parametrs import *
+from parametrs import *
 
 class Player(pygame.sprite.Sprite):
     'Класс, описывающий главного героя'
@@ -47,3 +47,18 @@ class Coin(pygame.sprite.Sprite):
     def update(self):
         self.rect.right = random.randint(40, 760)
         self.rect.top = random.randint(40, 760)
+
+
+class Spike(pygame.sprite.Sprite):
+    'Класс, описывающий спрайт шипа'
+
+    def __init__(self):  # конструктор класса
+        pygame.sprite.Sprite.__init__(self)  # реализация базового конструктора класса
+        self.image = pygame.image.load(background_spike)
+        self.image = pygame.transform.smoothscale(self.image, (60, 60))
+        self.rect = self.image.get_rect()
+        self.rect.right = random.randint(40, 760)
+        self.rect.top = random.randint(40, 760)
+
+    def update(self):
+        pass

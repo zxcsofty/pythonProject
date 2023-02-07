@@ -1,7 +1,8 @@
 import time
-from Game.helper import *
-from Game.parametrs import *
-from Game.sprites import Player, Coin
+import pygame
+from helper import *
+from parametrs import *
+from sprites import Player, Coin, Spike
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))  # размер дисплея
 clock = pygame.time.Clock()  # переменная для работы с частотой кадров
@@ -14,8 +15,14 @@ players_sprites.add(player)  # добавляю спрайт в группу
 items_sprites = pygame.sprite.Group()  # группа спрайтов для предметов для сбора
 coin = Coin()  # создадим монетку
 items_sprites.add(coin)  # добавим монетку к группе спрайтов
+enemies_sprites = pygame.sprite.Group()
+for _ in range(10):
+    spike = Spike()
+    while pygame.sprite.spritecollide(spike, players_sprites, False) or pygame.sprite.spritecollide(spike, items_sprites, False):
+        spike = Spike()
+    enemies_sprites.add(spike)
 
-def start_level():
+def start_level_2():
     running = True  # переменная для запуска игрового цикла
     pause = True
     score = 0
@@ -28,9 +35,10 @@ def start_level():
         players_sprites.update()
 
         # отрисовка
-        screen.blit(bg, (0, 0))
+        screen.blit(bg_2, (0, 0))
         players_sprites.draw(screen)  # отрисовка персонажа на экране
         items_sprites.draw(screen)  # отрисовка монетки на экране
+        enemies_sprites.draw(screen)
         draw_text(screen, f'Счёт:{str(score)}', 50, WIDTH / 2, 10)
 
         # обработка событий
@@ -38,6 +46,15 @@ def start_level():
         if pygame.sprite.spritecollide(player, items_sprites, False):
             score += 1
             items_sprites.update()
+
+        if pygame.sprite.spritecollide(coin, enemies_sprites, False):
+            items_sprites.update()
+
+        if pygame.sprite.spritecollide(player, enemies_sprites, False):
+            draw_text(screen, ' Вы проиграли', 100, WIDTH / 2, HEIGHT / 2)
+            pygame.display.flip()
+            time.sleep(5)
+            running = False
 
         for event in pygame.event.get():
             # проверка на закрытие игры
@@ -61,10 +78,10 @@ def start_level():
             running = False
         else:
             if pause == True:
-                draw_text(screen, f'Уровень 1', 100, WIDTH / 2, HEIGHT / 2)
+                draw_text(screen, f'Уровень 2', 100, WIDTH / 2, HEIGHT / 2)
                 # после отрисовки, переворачиваем экран
                 pygame.display.flip()
-                time.sleep(5)
+                time.sleep(1)
                 pause = False
             else:
                 pygame.display.flip()
