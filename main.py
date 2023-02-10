@@ -11,4 +11,4 @@ pygame.display.set_caption("Моя первая игра")  # заголовок
 start_level_1()
 # первый уровень
 start_level_2() # запуск 2 уровня
-
+#новый коммит
