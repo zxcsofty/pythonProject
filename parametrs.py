@@ -1,9 +1,9 @@
 import pygame
 
 # Параметры
-WIDTH = 800  # ширина игрового окна
-HEIGHT = 800  # высота игрового окна
-FPS = 30  # частота кадров в секунду
+WIDTH = 1600  # ширина игрового окна
+HEIGHT = 900  # высота игрового окна
+FPS = 60  # частота кадров в секунду
 
 # Цвета
 WHITE = (255, 255, 255)
@@ -18,3 +18,4 @@ background_player = "Sources/background_player.png"
 background_coin = "Sources/background_coin.png"
 background_spike = 'Sources/spike.png'
 bg_2 = pygame.image.load('Sources/stone_background.png')
+bacground_mushroom = 'Sources/mushroom .png'

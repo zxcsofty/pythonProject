@@ -2,7 +2,7 @@ import time
 import pygame
 from helper import *
 from parametrs import *
-from sprites import Player, Coin, Spike
+from sprites import Player, Coin, Spike, Mushroom
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))  # размер дисплея
 clock = pygame.time.Clock()  # переменная для работы с частотой кадров
@@ -16,13 +16,23 @@ items_sprites = pygame.sprite.Group()  # группа спрайтов для п
 coin = Coin()  # создадим монетку
 items_sprites.add(coin)  # добавим монетку к группе спрайтов
 enemies_sprites = pygame.sprite.Group()
+monsters_sprites = pygame.sprite.Group()
+monster = Mushroom()
+monsters_sprites.add(monster)
 for _ in range(10):
     spike = Spike()
-    while pygame.sprite.spritecollide(spike, players_sprites, False) or pygame.sprite.spritecollide(spike, items_sprites, False):
+    while pygame.sprite.spritecollide(spike, players_sprites, False) or pygame.sprite.spritecollide(spike, items_sprites, False)\
+            or pygame.sprite.spritecollide(spike, enemies_sprites, False):
         spike = Spike()
     enemies_sprites.add(spike)
 
-def start_level_2():
+for _ in range(10):
+    mushroom = Mushroom()
+    while pygame.sprite.spritecollide(mushroom, players_sprites, False) or pygame.sprite.spritecollide(spike, items_sprites, False):
+        mushroom = Mushroom()
+    monsters_sprites.add(mushroom)
+
+def start_level_3():
     running = True  # переменная для запуска игрового цикла
     pause = True
     score = 0
@@ -33,16 +43,25 @@ def start_level_2():
 
         # обновление спрайтов
         players_sprites.update()
+        monsters_sprites.update()
 
         # отрисовка
         screen.blit(bg_2, (0, 0))
         players_sprites.draw(screen)  # отрисовка персонажа на экране
         items_sprites.draw(screen)  # отрисовка монетки на экране
         enemies_sprites.draw(screen)
+        monsters_sprites.draw(screen)
         draw_text(screen, f'Счёт:{str(score)}', 50, WIDTH / 2, 10)
 
         # обработка событий
         # проверка на сбор монет
+        if pygame.sprite.spritecollide(player, monsters_sprites, False):
+            draw_text(screen, ' Вы проиграли', 100, WIDTH / 2, HEIGHT / 2)
+            pygame.display.flip()
+            time.sleep(3)
+            running = False
+
+
         if pygame.sprite.spritecollide(player, items_sprites, False):
             score += 1
             items_sprites.update()
@@ -53,7 +72,7 @@ def start_level_2():
         if pygame.sprite.spritecollide(player, enemies_sprites, False):
             draw_text(screen, ' Вы проиграли', 100, WIDTH / 2, HEIGHT / 2)
             pygame.display.flip()
-            time.sleep(5)
+            time.sleep(3)
             running = False
 
         for event in pygame.event.get():
@@ -74,7 +93,7 @@ def start_level_2():
         if score >= 10:
             draw_text(screen, f'Уровень пройден', 100, WIDTH / 2, HEIGHT / 2)
             pygame.display.flip()
-            time.sleep(5)
+            time.sleep(3)
             running = False
         else:
             if pause == True:
